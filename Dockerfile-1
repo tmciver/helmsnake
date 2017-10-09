@@ -1,0 +1,22 @@
+FROM ubuntu:14.04
+LABEL maintainer "Tim McIver <tim@timmciver.com>"
+
+# Stack stores binaries in /root/.local/bin
+ENV PATH /root/.local/bin:$PATH
+
+RUN apt-get update \
+    && apt-get install -y wget git \
+    && wget -q -O- https://s3.amazonaws.com/download.fpcomplete.com/ubuntu/fpco.key | sudo apt-key add - \
+    && echo 'deb http://download.fpcomplete.com/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/fpco.list \
+    && apt-get update \
+    && apt-get install libsdl2-dev libcairo2-dev libpango1.0-de stack wget libgles2-mesa-dev -y --no-install-recommends \ 
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app/helmsnake
+COPY stack.yaml .
+COPY helmsnake.cabal .
+RUN stack setup \
+    && stack install gtk2hs-buildtools \
+    && stack build --only-dependencies
+
+#COPY . .
