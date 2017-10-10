@@ -1,11 +1,11 @@
 # HelmSnake
-A Snake clone built on the [[http://helm-engine.org/][Helm]] game engine.
+A Snake clone built on the [Helm](http://helm-engine.org) game engine.
 
 ## Building
 
 ### Docker
 The helmsnake docker image currently depends on a Helm docker image produced
-by the [[https://github.com/mainehaskell][MaineHaskell Github Organization]].
+by the [MaineHaskell Github Organization](https://github.com/mainehaskell).
 Build that image with the following commands:
 
     $ git clone https://github.com/mainehaskell/Dockerfiles.git maine-haskell-dockerfiles
@@ -19,7 +19,7 @@ Then, build the helmsnake docker image as follows:
 
 ## Running
 To allow the helmsnake container to open a window on the host machine, execute
-the following (being sure to replace `<user` with your username):
+the following (being sure to replace `<user>` with your username):
 
     $ sudo xhost +local:<user>
 
