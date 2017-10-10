@@ -11,3 +11,5 @@ RUN stack build --only-dependencies
 
 COPY . .
 RUN stack build
+
+ENTRYPOINT stack exec helmsnake
