@@ -19,7 +19,7 @@ windowDims :: V2 Int
 windowDims = V2 800 600
 
 segmentSize :: Int
-segmentSize = 25
+segmentSize = 20
 
 speed :: Int -- pixels per second
 speed = 100
@@ -54,13 +54,15 @@ update (Snake dir oldSnake@((V2 x y):_)) (Animate _) = (snake, Cmd.none)
   where snake = (Snake dir (take (length oldSnake) newSnake))
         newSnake = newHead:oldSnake
         newHead = case dir of
-          Up -> V2 x (y + segmentSize)
-          Down -> V2 x (y - segmentSize)
+          Up -> V2 x (y - segmentSize)
+          Down -> V2 x (y + segmentSize)
           Left -> V2 (x - segmentSize) y
           Right -> V2 (x + segmentSize) y
 
--- Changing direction not yet implemented
-update snake _ = (snake, Cmd.none)
+update (Snake _ segments) MoveUp = (Snake Up segments, Cmd.none)
+update (Snake _ segments) MoveDown = (Snake Down segments, Cmd.none)
+update (Snake _ segments) MoveLeft = (Snake Left segments, Cmd.none)
+update (Snake _ segments) MoveRight = (Snake Right segments, Cmd.none)
 
 subscriptions :: Sub SDLEngine Action
 subscriptions = Sub.batch
