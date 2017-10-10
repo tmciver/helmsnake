@@ -76,7 +76,6 @@ subscriptions = Sub.batch
                 ]
 
 view :: Model -> Graphics SDLEngine
---view (Snake _ segments) = Graphics2D $ collage [move pos $ filled (rgb 1 0 0) $ square 10]
 view (Snake _ segments) = Graphics2D $ collage body
   where body = map (\pos -> move (fromIntegral <$> pos) $ filled (rgb 1 1 1) $ square (fromIntegral segmentSize)) segments
 
