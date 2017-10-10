@@ -10,6 +10,7 @@ Build that image with the following commands:
 
     $ git clone https://github.com/mainehaskell/Dockerfiles.git maine-haskell-dockerfiles
     $ cd maine-haskell-dockerfiles
+    $ git checkout global-helm
     $ docker build . -t mainehaskell/helm
 
 Then, build the helmsnake docker image as follows:
