@@ -40,10 +40,10 @@ data Model = Snake Dir [(V2 Int)]
 
 initial :: (Model, Cmd SDLEngine Action)
 initial = (snake, Cmd.none)
-  where snake = Snake Up [ V2 x y
-                         , V2 x (y - segmentSize)
-                         , V2 x (y - 2 * segmentSize)
-                         ]
+  where snake = Snake Right [ V2 x y
+                            , V2 x (y + segmentSize)
+                            , V2 x (y + 2 * segmentSize)
+                            ]
         V2 w h = windowDims
         (x, y) = (w `div` 2, h `div` 2) -- start the snake's head in the middle of the screen
 
@@ -69,13 +69,14 @@ subscriptions = Sub.batch
                      Keyboard.DownKey -> MoveDown
                      Keyboard.LeftKey -> MoveLeft
                      Keyboard.RightKey -> MoveRight
+                     _ -> DoNothing
                 , Time.fps 2 Animate
                 ]
 
 view :: Model -> Graphics SDLEngine
 --view (Snake _ segments) = Graphics2D $ collage [move pos $ filled (rgb 1 0 0) $ square 10]
 view (Snake _ segments) = Graphics2D $ collage body
-  where body = map (\(V2 x y) -> filled (rgb 1 0 0) $ square (fromIntegral segmentSize)) segments
+  where body = map (\pos -> move (fromIntegral <$> pos) $ filled (rgb 1 1 1) $ square (fromIntegral segmentSize)) segments
 
 main :: IO ()
 main = do
